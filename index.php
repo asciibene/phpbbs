@@ -16,7 +16,6 @@ if (isset($_GET['reset'])){
 	<link rel="stylesheet" type="text/css" href="style.css" />  
 </head>
 <body>
-	<h1><span id="logo1">php</span><span id="logo2">wiki</span> </h1>
 	<?php if(isset($_COOKIE["verified"])){
           echo '<small>Logged in as '.$_COOKIE["verified"].'. </small><br>';
         } ?>
@@ -29,8 +28,6 @@ if (isset($_GET['reset'])){
 <div>
 <?php if (isset($_GET['index'])): ?>
   <?php viewpage($_GET['index']); ?>
-<?php elseif(empty($_GET)): ?>
-      <?php showtitles(); ?>
 <?php endif; ?>
 	</div>
 </body>

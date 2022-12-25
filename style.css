@@ -21,7 +21,14 @@
      font-size: 24px;
 			 color: #906FFF ;
 			 text-decoration: underline;
+
    }
+   #logover{
+     font-size: 85%;
+     text-decoration: underline;
+
+
+  }
    h1{
      margin-bottom: 18px;
    }

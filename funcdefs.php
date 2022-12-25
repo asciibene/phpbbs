@@ -2,6 +2,12 @@
 const STYLE_TOKENS=['__','**','//'];
 const LINK_TOKEN=["-[","]-"];
 const BR="<br>";
+const VER="v0.02";
+
+function printLogo(){
+  echo '<h1><span id="logo1">php</span><span id="logo2">wiki</span><sup id="logover">'.VER.'</sup> </h1>';
+  return null;
+}
 
 function printError($error) {
 		if (!empty($error)) {
@@ -130,6 +136,7 @@ function viewpage($ind){
 
 function viewprofile($uindex){
   // TODO output html stuff pertaining to profile
+  
 }
 
 

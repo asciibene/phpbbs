@@ -1,15 +1,6 @@
 <?php
 require 'funcdefs.php';
-// DELETE THIS WHEN DEPLOYING
-if (isset($_GET['reset'])){
-  $db=[];
-  $usrdb=[['n'=>'test','p'=>'wow']];
-  savedb();
-}else{
-  initdb();
-}
-//XXXXXXXXXXXXXXXXXXX
-
+initdb();
 ?><html>
 <head>
 	<title>phpwiki</title>
@@ -23,7 +14,7 @@ if (isset($_GET['reset'])){
 
 <?php
     if (isset($_GET['uindex'])){
-      viewprofile($_GET['index']);
+      viewprofile($_GET['uindex']);
     }elseif(empty($_GET)){   
       // show all user ?
     }
