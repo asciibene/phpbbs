@@ -7,14 +7,14 @@ initdb();
 	<link rel="stylesheet" type="text/css" href="style.css" />  
 </head>
 <body>
-	<h1><span id="logo1">php</span><span id="logo2">wiki</span> </h1>
+	<?php printLogo(); ?>
 	<?php 
 	 if(isset($_COOKIE["verified"])){
     echo '<small>Logged in as '.$_COOKIE["verified"].'. </small><br>';
   }
   if(isset($_POST['user_comment']) and isset($_COOKIE['verified'])){
     addcomment($_GET['index'],$_POST['user_comment']);
-  }elseif(!isset($_COOKIE['verified'] and isset($_POST['user_comment'])){
+  }elseif(!isset($_COOKIE['verified']) and isset($_POST['user_comment'])){
     printError("You are not logged in.");
   }
 ?>

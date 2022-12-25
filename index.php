@@ -16,6 +16,7 @@ if (isset($_GET['reset'])){
 	<link rel="stylesheet" type="text/css" href="style.css" />  
 </head>
 <body>
+<?php printLogo(); ?>
 	<?php if(isset($_COOKIE["verified"])){
           echo '<small>Logged in as '.$_COOKIE["verified"].'. </small><br>';
         } ?>
@@ -26,9 +27,7 @@ if (isset($_GET['reset'])){
    <?php printError('You are not connected'); ?>
 <?php endif; ?>
 <div>
-<?php if (isset($_GET['index'])): ?>
-  <?php viewpage($_GET['index']); ?>
-<?php endif; ?>
-	</div>
+<?php showtitles(); ?>
+</div>
 </body>
 </html>
