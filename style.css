@@ -1,0 +1,96 @@
+
+	 body {
+	   background-color: black;
+	   color: white;
+	 }
+	 
+		* {
+			font-size: 14px;
+			font-family: Courrier, serif;
+		}
+		code {
+			font-family: monospace;
+		}
+		#logo1 {
+			font-size: 28px;
+			 background-color: #805FFF;
+			 color:black;
+			 padding: 0px;
+    }
+   #logo2{
+     font-size: 24px;
+			 color: #906FFF ;
+			 text-decoration: underline;
+   }
+   h1{
+     margin-bottom: 18px;
+   }
+	  div h1 {
+		   padding-left: 0px;
+      margin: 4px 4px;
+			font-size: 18px;
+			 text-decoration: underline;
+			  
+    }
+    div p {
+    margin-left: 8px;
+    margin-top: 12px;
+    }
+    div.comments_box{
+      border: double 3px white;
+      padding: 2px 4px;
+    }
+    div.comment{
+      border: double 1px white;
+      margin: 2px 4px;
+    }
+    a.link, a.link:visited{
+      color: cyan;
+      border: none;
+			font-weight: bold;
+    }
+
+		small.error {
+			color: red;
+			font-weight: bold;
+		}
+		small.error::before {
+			content: "Error! ";
+    }
+    a{
+      font-size: 16px;
+      color: aqua;
+      border-left: solid 4px blue;
+      padding-left: 4px;
+      
+    }
+    a:visited{
+     border-left: solid 4px #777;
+     color: grey;
+    }
+    
+    p {
+      margin-left: 16px;
+    
+    }
+    p.notify{
+      font-size: 75%;
+    }
+    p.com{
+      font-size: 120%;
+    }
+    .com_auth{
+      font-size: 120%;
+    }
+    .com_tstamp{
+      font-size: 70%;
+    }
+    em.auth{
+      margin-left: 10px;
+      
+    }
+    
+    form {
+      border: 2px solid white;
+      padding: 2px;
+    }
