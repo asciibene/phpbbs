@@ -2,10 +2,13 @@
 require 'funcdefs.php';
 // DELETE THIS WHEN DEPLOYING
 if (isset($_GET['reset'])){
+  global $db;
+  global $dbusr;
   $db=[];
-  $usrdb=[['n'=>'test','p'=>'wow']];
+  $dbusr=[];
   savedb();
-}else{
+  initdb();
+}else {
   initdb();
 }
 //XXXXXXXXXXXXXXXXXXX
@@ -16,18 +19,19 @@ if (isset($_GET['reset'])){
 	<link rel="stylesheet" type="text/css" href="style.css" />  
 </head>
 <body>
-<?php printLogo(); ?>
-	<?php if(isset($_COOKIE["verified"])){
-          echo '<small>Logged in as '.$_COOKIE["verified"].'. </small><br>';
-        } ?>
-<?php if(!empty($_POST['user_title']) and !empty($_POST['user_content']) and isset($_COOKIE["verified"])): ?>
-  <?php newpage($_POST['user_title'],$_POST['user_content']);
-        echo '<p> Created new page '.$_POST['user_title'].' </p>'; ?>
-<?php elseif(!empty($_POST['user_title']) and !empty($_POST['user_content']) and empty($_COOKIE["verified"])): ?>
+<?php if(isset($_COOKIE["verified"])){
+        printMenu();
+}
+?>
+<?php if(!empty($_POST['user_title']) and !empty($_POST['user_content']) and checksec($_COOKIE["uindex"],$_COOKIE["hash"]) and $_GET['a']=='newpost'): ?>
+  <?php newpage($_POST['user_title'],$_POST['user_content']); ?>
+<?php elseif(!empty($_POST['user_title']) and !empty($_POST['user_content']) and checksec($_COOKIE["uindex"],$_COOKIE["hash"])==false): ?>
    <?php printError('You are not connected'); ?>
 <?php endif; ?>
+<h1>Welcome to <a class="nlk" href="/docs/about.html">phpBBS</a> !</h1>
 <div>
-<?php showtitles(); ?>
+
+<?php homepage(); ?>
 </div>
 </body>
 </html>

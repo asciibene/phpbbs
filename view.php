@@ -1,27 +1,30 @@
 <?php
 require 'funcdefs.php';
-initdb();
 ?><html>
 <head>
 	<title>phpwiki</title>
 	<link rel="stylesheet" type="text/css" href="style.css" />  
 </head>
 <body>
-	<?php printLogo(); ?>
+<form id="voteform" method="post">
+</form>
 	<?php 
-	 if(isset($_COOKIE["verified"])){
-    echo '<small>Logged in as '.$_COOKIE["verified"].'. </small><br>';
+	 if(isset($_POST['voted']) and checksec($_COOKIE["uindex"],$_COOKIE["hash"])){
+    addvote($_GET['index'],$_POST['voted']);
+  }elseif(checksec($_COOKIE["uindex"],$_COOKIE["hash"])==false and isset($_POST['voted'])){
+    printError("You are not logged in.");
   }
-  if(isset($_POST['user_comment']) and isset($_COOKIE['verified'])){
+	
+  if(isset($_POST['user_comment']) and checksec($_COOKIE["uindex"],$_COOKIE["hash"])){
     addcomment($_GET['index'],$_POST['user_comment']);
-  }elseif(!isset($_COOKIE['verified']) and isset($_POST['user_comment'])){
+  }elseif(checksec($_COOKIE["uindex"],$_COOKIE["hash"])==false and isset($_POST['user_comment'])){
     printError("You are not logged in.");
   }
 ?>
 <?php if (isset($_GET['index'])): ?>
    <?php viewpage($_GET['index']); ?>
-  <h3>add a comment</h3>
      <?php echo '<form method="post" action="./view.php?index='.$_GET['index'].'">'; ?> 
+     <h3>Add a comment</h3>
       <input type="text" name="user_comment" placeholder="add a comment" />
       <br>
       <button type="submit">Submit</button>

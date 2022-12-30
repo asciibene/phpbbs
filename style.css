@@ -3,57 +3,58 @@
 	   background-color: black;
 	   color: white;
 	 }
+	 body::after {
+    }
+   
 	 
 		* {
-			font-size: 14px;
-			font-family: Courrier, serif;
+			font-family: Courrier, monospace;
 		}
-		code {
+		code { 
 			font-family: monospace;
 		}
 		#logo1 {
-			font-size: 28px;
-			 background-color: #805FFF;
+			font-size: 42px;
+			 background-color: #1D00FF;
 			 color:black;
 			 padding: 0px;
     }
    #logo2{
-     font-size: 24px;
-			 color: #906FFF ;
+     font-size: 36px;
+			 color: #2C17FF;
 			 text-decoration: underline;
 
    }
    #logover{
-     font-size: 75%;
+     font-size: 35%;
      text-decoration: underline;
+     margin-top: 0px;
+     padding-top: 0px;
+     color: #31FF6C;
 
   }
-   h1{
-     margin-bottom: 10px;
-   }
-	  div h1 {
-		   padding-left: 0px;
-      margin: 4px 4px;
-			font-size: 18px;
-			 text-decoration: underline;
-			  
-    }
+
     div p {
     margin-left: 8px;
-    margin-top: 12px;
+    margin-top: 2px;
     }
-    div.comments_box{
-      border: double 4px white;
-      padding: 2px 2px;
-    }
-    div.comment{
-      border: solid 2px white;
-      margin: 4px 4px;
+    div.comments_box, div.comment{
+      border: inset 2px #2E0EEC;
+      padding: 4px 2px;
+      margin: 8px 0px;
     }
     a.link, a.link:visited{
       color: cyan;
       border: none;
-			font-weight: bold;
+			 font-weight: bold;
+    }
+    div a{
+      margin-right: 12px;
+    
+    }
+    div b{
+      color: darkgrey;    
+      font-size: 60%;
     }
 
 		small.error {
@@ -73,31 +74,54 @@
      border-left: solid 4px #777;
      color: grey;
     }
-    
-    p {
-      margin-left: 4px;
-    
-    }
-    p.notify{
-      font-size: 75%;
-    }
-    p.com{
-      font-size: 120%;
-      border-left: solid 3px white;
-      padding-left: 3px;
-    }
-    .com_auth{
-      font-size: 120%;
-    }
-    .com_tstamp{
-      font-size: 70%;
-    }
-    em.auth{
-      margin-left: 10px;
+    a.nlk{
+      border: none;
       
     }
+    .notify{
+      font-size: 75%;
+      color: lime;
+    }
+    .vote{
+    margin: 4px;
     
+    }
+    .view_title{
+      text-decoration: underline;
+      color: #3D70FF;
+    }
+    .view_time{ 
+    margin-left: 4px;
+    }
+    .view_view{
+      color: darkgrey;
+    }
+    .com{
+      border-left: solid 3px white;
+      padding-left: 5px;
+    }
+    .com_auth{
+      font-size: 100%;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+    .com_tstamp{
+      font-size: 50%;
+      color: darkgrey;
+      margin-left: 12px;
+    }
+
     form {
       border: 2px solid white;
       padding: 2px;
     }
+    .tsdiff{
+      color: darkgrey;
+      margin-left: 10px;
+    }
+    .menu > a, .menu > a:visited{
+      color:white;
+      border: none;
+      margin: 0px 8px;
+    }
+    

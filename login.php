@@ -1,18 +1,14 @@
 <?php
 require 'funcdefs.php';
-initdb();
 if (isset($_POST['luser']) and isset($_POST['lpassword'])){
   verifylogin($_POST['luser'],$_POST['lpassword']);
 }
-
 ?><html>
 <head>
 	<title>phpwiki - login</title>
 	<link rel="stylesheet" type="text/css" href="style.css" />  
 </head>
 <body>
-	<h1><span id="logo1">php</span><span id="logo2">wiki</span> </h1>
-	<small>!!here check session state, if logged or not...!!</small><br>
   <?php if(empty($_POST)): ?>
 	   <h3>Logín</h3>
     <form method="post" action="./login.php">

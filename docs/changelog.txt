@@ -1,0 +1,30 @@
+<!doctype HTML>
+<html>
+<head>
+	<title>phpwiki - changelog</title>
+	<link rel="stylesheet" type="text/css" href="../style.css" />  
+</head>
+<body>
+
+<h2>Changelog</h2>
+
+<ul>
+
+<li>v0.1 - upcoming Hopefully testing release
+  <ul>
+    <li> added profile customization
+  </ul>
+</ul>
+
+<li>v0.09
+  <ul>
+    <li> Better security
+    <li> Added voting posts features
+  </ul>
+</ul>
+
+
+
+</p>
+</body>
+</html>

@@ -1,11 +1,15 @@
 <?php
-const STYLE_TOKENS=['__','**','//'];
-const LINK_TOKEN=["-[","]-"];
-const BR="<br>";
-const VER="v0.02";
+//┌─────────── CONSTANTS ────────────┐
+  const STYLE_TOKENS=['__','**','//'];
+  const LINK_TOKEN=["-[","]-"];
+  const BR="<br>";
+  const VER="v0.08";
+//└──────────────────────────────────┘
 
+//┌──────────── GLOBAL FUNCTIONS ──────────────────
 function printLogo(){
-  echo '<h1><span id="logo1">php</span><span id="logo2">wiki</span><sup id="logover">'.VER.'</sup> </h1>';
+  echo '<h1><span id="logo1">php</span><span id="logo2">bbs</span><sup id="logover">'.VER.'</sup> </h1>';
+  echo '<hr>';
   return null;
 }
 
@@ -13,6 +17,10 @@ function printError($error) {
 		if (!empty($error)) {
 				echo '<small class="error">' .$error. '</small><br />';
 		}
+}
+
+function printMenu(){
+  echo '<span class="menu"> <a href="new.php">new post</a> <a href="/docs/changelog.html">changelog</a></span>';
 }
 
 function initdb(){
@@ -39,23 +47,31 @@ function savedb(){
 
 function newuser($uname,$upwd){
   global $dbusr;
+  if(strlen($upwd)<6){
+    printError("password must be at least 6 characters");
+    return null;
+  }elseif(strlen($uname)<3){
+    printError("username must be at least 3 characters");
+    return null;
+
+  }
   foreach($dbusr as $uar){
     if ($uar['n']==$uname){
       printError("user $uname already exists");
       return null;
     }
   }
-
-  $dbusr[]=["n" => $uname, "p" => password_hash($upwd, PASSWORD_DEFAULT),'op' => [], 'id'=>sizeof($dbusr)];// id should be the index of user INTO $dbusr
+  $dbusr[]=["n" => $uname, "p" => password_hash($upwd, PASSWORD_DEFAULT),'op' => [], 'id'=>sizeof($dbusr), 'bd'=>date('jS \of F Y h:i:s A'),'votes'=>[]];// id should be the index of user INTO $dbusr
   echo "<strong>registration sucessful</strong>";
   savedb();
 }
 
 function verifylogin($user,$enteredpass){
   global $dbusr;
-  foreach ($dbusr as $u){
+  foreach ($dbusr as $k=>$u){
     if ($u['n']==$user){
       $storedhash=$u['p'];
+      $uindex=$k;
       break;
     }
   }
@@ -64,11 +80,23 @@ function verifylogin($user,$enteredpass){
     return null;
   }
   if(password_verify($enteredpass,$storedhash)) {
-    setcookie('verified', $user,0);
+    setcookie('uindex', $uindex,0);
+    setcookie('hash', $storedhash,0); 
     echo '<p class="notify">You are now logged in.</p>';
   }else {
     printError('Invalid password.');
     return null;
+  }
+}
+
+function checksec($u,$p){
+  // check if hash in cookie is same as stored hash
+  global $dbusr;
+  if($dbusr[$u]['p']==$p){
+    return $dbusr[$u]['n'];
+  }
+  else{
+    return false;
   }
 }
 
@@ -78,55 +106,86 @@ function newpage($ttl,$txt){
   $pageindex=count($db);
   foreach($db as $p){
     if ($p['t']==$ttl){
-      printError("page $ttl already exists in the main DB.");
+      printError("post named $ttl already exists in the main DB.");
       return null;
     }  
   }
   foreach($dbusr as $k=>$u){
-    if($_COOKIE['verified'] == $u['n']){ //im ugly fixme pls
+    if(checksec($_COOKIE["uindex"],$_COOKIE["hash"]) == $u['n']){ //im ugly fixme pls
       array_push($dbusr[$k]['op'],$pageindex);
     }
   }  
-  array_push($db, ['t' => $ttl, 'c' => $txt, "a"=>$_COOKIE['verified'],"ts"=>date('jS \of F Y h:i:s A'),"com"=>[] ]);
+  array_push($db, ['t' => $ttl, 'c' => $txt, "a"=>checksec($_COOKIE["uindex"],$_COOKIE["hash"]),"ts"=>date('jS \of F Y h:i:s A'),"com"=>[],'vo'=>0,'vi'=>0 ]);
+  echo '<p class="notify"> Created new page '.$_POST['user_title'].' </p>'; 
   savedb();
 }
 
-function editpagearray($index,$newarr){
+function editpagetext($ind,$newtxt){
   global $db;
-  // TODO
+  $db[$ind]['c']=$newtxt;
+  // $db[$ind]['hist']=>[$db[$ind]['
+  savedb();
 }
 
-function showtitles(){
-//fixme : most recent notes should be on top
-// while older are to bottom XXX
+function showlatestposts(){
   global $db;
-  foreach ($db as $k=>$p){
-    // TODO XXX below em cnt. author should be <a> link. to author(user) profile
-    echo '<a href="/view.php?index='.$k.'">'.$p['t'].'</a>'."<em> By : {$p['a']}</em><br>";
+  $rev=array_reverse($db,true);
+  foreach ($rev as $k=>$p){
+    echo '<u class="votes">'.$p['vo'].'</u><a href="/view.php?index='.$k.'">'.$p['t'].'</a>'."<em>[{$p['a']}] </em> <small class=\"tsdiff\">{$ddiff}  </small>"."<b>".count($p['com'])." comments</b><br>";
   }
 }
 
-//TODO make show last 5 pages function
+function homepage(){
+  global $db;
+  global $dbusr;
+  echo '<h2>'.'New Posts:'.'</h2>';
+  $lastfivepages=array_reverse(array_slice($db,-5,5,true),true);
+  foreach($lastfivepages as $k=>$p){
+    $pd=date_create_from_format('jS \of F Y h:i:s A',$p['ts']);
+    $cd=date_create('now');
+    $ddiff=date_diff($cd,$pd)->format('%a days %h h %i m ago');
+    echo '<u class="votes">'.$p['vo'].'</u><a href="/view.php?index='.$k.'">'.$p['t'].'</a>'."<em>[{$p['a']}] </em> <small class=\"tsdiff\">{$ddiff}  </small>"."<b>".count($p['com'])." comments</b><br>";
+  }
+  // TODO make a link to see all latest posts here
+  echo '<h2>'.'New Users:'.'</h2>';
+  $lastfiveusers=array_reverse(array_slice($dbusr,-5,5,true),true);
+  foreach($lastfiveusers as $k=>$u){
+    echo '<a href="/profile.php?uindex='.$k.'">'.$u['n'].'</a><br>';
+  }
+  
+}
 
 
 function viewpage($ind){
   global $db;
+  $db[$ind]['vi']++;
+  savedb();
   $p=$db[$ind];
-  echo "<h1>{$p['t']}</h1>";
-  echo "<em class=\"auth\">written by : {$p['a']}</em><br>";
-  echo "<em class=\"time\">at : {$p['ts']}</em><br>";
+  echo "<h1 class=\"view_title\">{$p['t']}</h1>";
+  $pd=date_create_from_format('jS \of F Y h:i:s A',$p['ts']);
+  $cd=date_create('now');
+  $ddiff=date_diff($cd,$pd)->format('%a days %h h %i m ago');
+  echo "<span class=\"view_auth\">written by : {$p['a']}</span><br>";
+  echo "<span class=\"view_time\">{$p['ts']}</span>";
+  echo "<small class=\"tsdiff\">".$ddiff.'</small>';
+  
   $lines=explode("\n",$p['c']);
   foreach($lines as $l){
     if($l[0]=="#" and $l[1]==" "){
       echo '<h3>'.$l.'</h3>'.'<br>';  
     }
-    echo '<p>'.parseline($l).'</p>'.'<br>';  
+    echo '<p class="view_cont">'.parseline($l).'</p>';  
   }
+  echo '<hr>';
+  echo '<u>Post score: '.$p['vo'].'</u>';
+  echo '<button name="voted" value="1" form="voteform">UpVote</button>';
+  echo '<button name="voted" value="-1" form="voteform">DownVote</button><br>';
+  echo '<span class="view_view">Post read '.$p['vi'].' times.</span>';
   echo '<h3>'.count($p['com']).' comments:</h3>';
   echo '<div class="comments_box">';
   foreach($p['com'] as $c){
     echo '<div class="comment">';
-    echo '<u class="com_auth">'.$c['a'].'</u><br>'.'<br><small class="com_tstamp">'.$c['ts'].'</small>';
+    echo '<u class="com_auth">'.$c['a'].'</u>'.'<small class="com_tstamp">'.$c['ts'].'</small>';
     echo '<p class="com">'.$c['c'].'</p>';
     echo '</div>';
      
@@ -135,8 +194,21 @@ function viewpage($ind){
 }
 
 function viewprofile($uindex){
-  // TODO output html stuff pertaining to profile
-  
+  global $db;
+  global $dbusr;
+  $cusr=$dbusr[$uindex];
+  echo '<h2>User : '.$cusr['n'].'</h2>';
+  $pd=date_create_from_format('jS \of F Y h:i:s A',$cusr['bd']);
+  $cd=date_create('now');
+  $ddiff=date_diff($cd,$pd)->format('%a days %h h %i m ago');
+  echo '<em class="tsdiff">Registered '.$ddiff.'</em>';
+  echo '<span class="karma">Karma: '.$cusr['k'].'</span> <a href="/doc/about.html#karma">?</a>';
+  echo '<h2>Original Posts ('.count($cusr['op']).'):</h2>';
+  echo '<ul>';
+  foreach($cusr['op'] as $k){
+    echo '<li>'.'<a href="view.php?index='.$k.'">'.gettitlefromindex($k).'</a>';
+  }
+  echo '</ul>';
 }
 
 
@@ -176,9 +248,23 @@ function parseline($l){
 function addcomment($pindex,$comtext){
   global $db;
   // todo : check if pindex exists inside db first !
-  $db[$pindex]['com'][]=['a'=>$_COOKIE['verified'],'c'=>$comtext,'ts'=>date('jS \of F Y h:i:s A')];
+  $db[$pindex]['com'][]=['a'=>checksec($_COOKIE["uindex"],$_COOKIE["hash"]),'c'=>$comtext,'ts'=>date('jS \of F Y h:i:s A')];
+  echo '<p class="notify"> Submitted comment sucessfully. </p>'; 
   savedb();
     
+}
+
+function addvote($pindex,$votedelta){
+  global $db;
+  global $dbusr;
+  if(in_array($pindex,$dbusr[$_COOKIE['uindex']]['votes'])){
+    printError("You can only vote once");
+    return null;
+  }else{
+    $db[$pindex]['vo']+=$votedelta;
+    $dbusr[$_COOKIE['uindex']]['votes'][]=$pindex;
+  }
+  savedb();
 }
 
 function getindexfromtitle($ttl){
@@ -207,4 +293,25 @@ function getindexfromusername($uname){
   }
   return null;
 }
+
+function getusername($ind){
+  global $dbusr;
+  return $dbusr[$ind]['n'];
+}
+
+function getcontent_nl2br($ind){
+  global $db;
+  return $db[$ind]['c'];
+}
+// ├─────────── MAIN ──────────────
+initdb();
+if (!isset($_POST['luser']) and !isset($_POST['lpassword'])){
+  printLogo();
+  if(!checksec($_COOKIE["uindex"],$_COOKIE["hash"])==false){
+    echo '<small class="notify">Logged in as '.checksec($_COOKIE["uindex"],$_COOKIE["hash"]).'. </small><br>';
+    echo '<hr>';
+  }
+}
+
+ 
 ?>

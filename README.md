@@ -1,12 +1,16 @@
 # About the name
-You shouldnt interpret the title of this website as "A wiki pertaining to php".
+You shouldnt interpret the title of this website as "A bbs pertaining to php".
 Its simply called like that because originally I was wanting to program a framework for making wikis in PHP...
 However over time this idea got less and less appealing to me, I realised I wanted to make something more social than a wiki.
-Maybe something in between a wiki and a bulletin board?
-Maybe the proper name would have been along the lines of "PhpBBS" but a name is just a name, after all.
+Maybe something *inbetween a wiki and a bulletin board*?
 
+While in the end there are many features that a Wiki would have (Everyone can edit pages etc) the initial goal that I had of programming a wiki software from scratch has vanished.
 
-# Style and emphasis inside texts
+# So what is it all about?
+This project will keep evolving for as long as I can make it evolve, adding new features that may or may not be related to it's original roots as a Wiki software.
+For now you can register, make posts and comment on posts.
+
+# Style and emphasis inside pages
 
 You can use a form of markup to lightly style ypur texts.
 
@@ -28,10 +32,10 @@ Currently the following are available:
 * Bold -> '**'
 * Underline -> '__'
 
-e.g. Consider this line, //this would be italics// and this normal.
+e.g. Consider this line, //this would be italics// and this would be normal.
 
 ## Links
-You can link to other pages on the wiki.
+You can link to other posts on the bbs.
 However the link's text is always the title of page being linked to.
 To insert a link anywhere inside a line, you must enclose the page's title between '-[' and ']-'.
 The following example would link to a page named 'my page'.
