@@ -9,7 +9,7 @@ require 'funcdefs.php';
 <form id="voteform" method="post">
 </form>
 	<?php 
-	 if(isset($_POST['voted']) and checksec($_COOKIE["uindex"],$_COOKIE["hash"])){
+	 if(isset($_POST['voted']) and isset($_GET['index']) and checksec($_COOKIE["uindex"],$_COOKIE["hash"])){
     addvote($_GET['index'],$_POST['voted']);
   }elseif(checksec($_COOKIE["uindex"],$_COOKIE["hash"])==false and isset($_POST['voted'])){
     printError("You are not logged in.");
@@ -22,7 +22,7 @@ require 'funcdefs.php';
   }
 ?>
 <?php if (isset($_GET['index'])): ?>
-   <?php viewpage($_GET['index']); ?>
+   <?php viewpage($_GET['index'],!isset($_POST['voted'])); ?>
      <?php echo '<form method="post" action="./view.php?index='.$_GET['index'].'">'; ?> 
      <h3>Add a comment</h3>
       <input type="text" name="user_comment" placeholder="add a comment" />

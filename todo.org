@@ -4,20 +4,13 @@
 
 ** List
 note : use static variable
-- put readme>>help.html
-- implement karma
-    - karma repr all the votes users did, so a negative karma is not necess. bad 
-- add voting features
-    - +show votes on homepage (like reddit)+
-    - make voting inputs on viewpage
-- fix the line in foreach (espec. relating to comments :: homepage()
+
+- important but unsure :: implement pages agus users as objects instead of arrays
+    - because objects can carry methods which are useful
+
+
 - make admin tools 
     -admin god account
-- *security revision*
-    - fix forms <=!!
-    - fix $GET requests
-    - make better session system 
-        * ie. do not use cookies as they can be forged...
      
 - +make page editor+
    - although fix it so can edit already existing pages

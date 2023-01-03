@@ -19,13 +19,15 @@ if (isset($_GET['reset'])){
 	<link rel="stylesheet" type="text/css" href="style.css" />  
 </head>
 <body>
-<?php if(isset($_COOKIE["verified"])){
-        printMenu();
+<?php 
+  if(checksec($_COOKIE["uindex"],$_COOKIE["hash"])){
+    printMenu();
+    if(!empty($_POST['user_title']) and !empty($_POST['user_content']) and $_GET['a']=='newpost'){
+      newpage($_POST['user_title'],$_POST['user_content']);
+    }        
 }
 ?>
-<?php if(!empty($_POST['user_title']) and !empty($_POST['user_content']) and checksec($_COOKIE["uindex"],$_COOKIE["hash"]) and $_GET['a']=='newpost'): ?>
-  <?php newpage($_POST['user_title'],$_POST['user_content']); ?>
-<?php elseif(!empty($_POST['user_title']) and !empty($_POST['user_content']) and checksec($_COOKIE["uindex"],$_COOKIE["hash"])==false): ?>
+<?php if(!empty($_POST['user_title']) and !empty($_POST['user_content']) and checksec($_COOKIE["uindex"],$_COOKIE["hash"])==false): ?>
    <?php printError('You are not connected'); ?>
 <?php endif; ?>
 <h1>Welcome to <a class="nlk" href="/docs/about.html">phpBBS</a> !</h1>

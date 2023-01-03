@@ -8,12 +8,10 @@ require 'funcdefs.php';
 </head>
 <body>
 <h1>Admin</h1>
-<?php if(!empty($_POST['user_title']) and !empty($_POST['user_content']) and isset($_COOKIE["verified"])): ?>
+<div> 
+<?php if(checksec()){
 
-<?php elseif(!empty($_POST['user_title']) and !empty($_POST['user_content']) and empty($_COOKIE["verified"])): ?>
-   <?php printError('You are not connected'); ?>
-<?php endif; ?>
-<div>
+;
 
 </div>
 </body>
