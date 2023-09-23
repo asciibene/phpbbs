@@ -181,7 +181,7 @@ function viewpage($ind,$updviews=true){
   $pd=date_create_from_format('jS \of F Y h:i:s A',$p['ts']);
   $cd=date_create('now');
   $ddiff=date_diff($cd,$pd)->format('%a days %h h %i m ago');
-  echo "<span class=\"view_auth\">written by : ".'<a href="profile.php?uindex='.getindexfromuser($p['a'].'">'.$p['a']"</span><br>";
+  echo "<span class=\"view_auth\">written by : ".'<a href="profile.php?uindex='.getindexfromusername($p['a']).'">'.$p['a']."</a></span><br>";
   echo "<span class=\"view_time\">{$p['ts']}</span>";
   echo "<small class=\"tsdiff\">".$ddiff.'</small>';
   
