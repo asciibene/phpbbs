@@ -36,7 +36,7 @@ e.g. Consider this line, //this would be italics// and this would be normal.
 
 ## Links
 You can link to other posts on the bbs.
-However the link's text is always the title of page being linked to.
+__However the link's text is always the title of page being linked to.__
 To insert a link anywhere inside a line, you must enclose the page's title between '-[' and ']-'.
 The following example would link to a page named 'my page'.
 e.g. : -[my page]-
