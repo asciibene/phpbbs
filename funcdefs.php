@@ -3,7 +3,10 @@
   const STYLE_TOKENS=['__','**','//'];
   const LINK_TOKEN=["-[","]-"];
   const BR="<br>";
-  const VER="v0.08";
+  const VER="v0.10";
+
+  const THREAD_DB_FILE="/db/thread.db"
+  const USER_DB_FILE="/db/user.db"
 //└──────────────────────────────────┘
 
 //┌──────────── GLOBAL FUNCTIONS ──────────────────
@@ -26,10 +29,9 @@ function printMenu(){
 function initdb(){
 global $db;
 global $dbusr;
-if (file_exists('wiki.db') and file_exists('users.db')){
-    $ftxt=file_get_contents('wiki.db');
-    $uftxt=file_get_contents('users.db');
-
+if (file_exists(THREAD_DB_FILE) and file_exists(USER_DB_FILE)){
+    $tftxt=file_get_contents(THREAD_DB_FILE);
+    $uftxt=file_get_contents(USER_DB_FILE);
     $db=unserialize($ftxt);
     $dbusr=unserialize($uftxt);
   }else{
@@ -41,8 +43,8 @@ if (file_exists('wiki.db') and file_exists('users.db')){
 function savedb(){
   global $db;
   global $dbusr;
-  file_put_contents('wiki.db',serialize($db));
-  file_put_contents('users.db',serialize($dbusr));
+  file_put_contents(THREAD_DB_FILE,serialize($db));
+  file_put_contents(USER_DB_FILE,serialize($dbusr));
 }
 
 function newuser($uname,$upwd){
@@ -171,6 +173,7 @@ function homepage(){
 
 
 function viewpage($ind,$updviews=true){
+  # put boilerplate below into corresponding html doc
   global $db;
   if($updviews){
     $db[$ind]['vi']++;
