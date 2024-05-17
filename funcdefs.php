@@ -99,7 +99,7 @@ function verifylogin($user,$enteredpass){
 
 function checkadmin($uh){
   global $dbusr;
-  
+   
   
 
 }

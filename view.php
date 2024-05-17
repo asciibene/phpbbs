@@ -9,9 +9,9 @@ require 'funcdefs.php';
 <form id="voteform" method="post">
 </form>
 	<?php 
-	 if(isset($_POST['voted']) and isset($_GET['index']) and checksec($_COOKIE["uindex"],$_COOKIE["hash"])){
+	 if(isset($_POST['voted']) and isset($_GET['index']) and $sec=checksec($_COOKIE["uindex"],$_COOKIE["hash"])){
     addvote($_GET['index'],$_POST['voted']);
-  }elseif(checksec($_COOKIE["uindex"],$_COOKIE["hash"])==false and isset($_POST['voted'])){
+  }elseif($sec==false and isset($_POST['voted'])){
     printError("You are not logged in.");
   }
 	
