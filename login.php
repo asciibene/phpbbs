@@ -11,7 +11,7 @@ if (isset($_POST['luser']) and isset($_POST['lpassword'])){
 <body>
   <?php if(empty($_POST)): ?>
 	   <h3>Logín</h3>
-    <form method="post" action="./login.php">
+      <form method="post" action="./login.php">
       <input type="text" name="luser" placeholder="username" />
       <br />
       <input type="password" name="lpassword" placeholder="password" />
