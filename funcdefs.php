@@ -5,8 +5,8 @@
   const BR="<br>";
   const VER="v0.10";
 
-  const THREAD_DB_FILE="/db/thread.db"
-  const USER_DB_FILE="/db/user.db"
+  const THREAD_DB_FILE="/db/thread.db";
+  const USER_DB_FILE="/db/user.db";
 //└──────────────────────────────────┘
 
 //┌──────────── GLOBAL FUNCTIONS ──────────────────
@@ -22,6 +22,8 @@ function printError($error) {
 		}
 }
 
+
+
 function printMenu(){
   echo '<span class="menu">|<a href="new.php">new post</a>|<a href="/docs/changelog.html">changelog</a></span>';
 }
@@ -32,7 +34,7 @@ global $dbusr;
 if (file_exists(THREAD_DB_FILE) and file_exists(USER_DB_FILE)){
     $tftxt=file_get_contents(THREAD_DB_FILE);
     $uftxt=file_get_contents(USER_DB_FILE);
-    $db=unserialize($ftxt);
+    $db=unserialize($tftxt);
     $dbusr=unserialize($uftxt);
   }else{
     printError('A .db file is missing or empty');
@@ -97,7 +99,8 @@ function verifylogin($user,$enteredpass){
   }
 }
 
-function checkadmin($uh){
+function checkadmin(){
+  //  TODO
   global $dbusr;
    
   

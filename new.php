@@ -4,7 +4,7 @@
 	<link rel="stylesheet" type="text/css" href="style.css" />  
 </head>
 <body>
-	<h3>New page</h3>
+  <h3>New post </h3>
     <form method="post" action="./index.php?a=newpost">
       <input type="text" name="user_title" placeholder="Title" />
     <br>

@@ -2,7 +2,7 @@
 require 'funcdefs.php';
 ?><html>
 <head>
-	<title>phpwiki - registration</title>
+	<title>phpbbs - registration</title>
 	<link rel="stylesheet" type="text/css" href="style.css" />  
 </head>
 <body>
@@ -13,7 +13,7 @@ require 'funcdefs.php';
       <br />
       <input type="password" name="npassword" placeholder="pwd" />
       <br>
-      <button type="submit">Send</button>
+      <button name="action" value="register">Send</button>
     </form>
   <?php elseif(isset($_POST['nuser']) and isset($_POST['npassword'])): ?>
     <?php newuser($_POST['nuser'],$_POST['npassword']); ?>
