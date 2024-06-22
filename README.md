@@ -1,16 +1,4 @@
-# About the name
-You shouldnt interpret the title of this website as "A bbs pertaining to php".
-Its simply called like that because originally I was wanting to program a framework for making wikis in PHP...
-However over time this idea got less and less appealing to me, I realised I wanted to make something more social than a wiki.
-Maybe something *inbetween a wiki and a bulletin board*?
-
-While in the end there are many features that a Wiki would have (Everyone can edit pages etc) the initial goal that I had of programming a wiki software from scratch has vanished.
-
-# So what is it all about?
-This project will keep evolving for as long as I can make it evolve, adding new features that may or may not be related to it's original roots as a Wiki software.
-For now you can register, make posts and comment on posts.
-
-# Style and emphasis inside pages
+# A note on Style and emphasis inside pages
 
 You can use a form of markup to lightly style ypur texts.
 
@@ -34,7 +22,7 @@ Currently the following are available:
 
 e.g. Consider this line, //this would be italics// and this would be normal.
 
-## Links
+# making links 
 You can link to other posts on the bbs.
 __However the link's text is always the title of page being linked to.__
 To insert a link anywhere inside a line, you must enclose the page's title between '-[' and ']-'.
