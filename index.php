@@ -1,39 +1,25 @@
 <?php
-require 'funcdefs.php';
-// DELETE THIS WHEN DEPLOYING
-if (isset($_GET['reset'])){
-  global $db;
-  global $dbusr;
-  $db=[];
-  $dbusr=[];
-  savedb();
-  initdb();
-}else {
-  initdb();
+require './scripts/funcdefs.php';
+if ($_GET['reset']??false){
+	global $db;
+	$db=new DB;
+  $db->savedb();
 }
-//XXXXXXXXXXXXXXXXXXX
 
-?><html>
+?>
+<html>
 <head>
-	<title>phpwiki</title>
-	<link rel="stylesheet" type="text/css" href="style.css" />  
+<title>PHPBBg</title>
+<link rel="stylesheet" type="text/css" href="style.css" /> 
 </head>
 <body>
 <?php 
-  if(checksec($_COOKIE["uindex"],$_COOKIE["hash"])){
-    printMenu();
-    if(!empty($_POST['user_title']) and !empty($_POST['user_content']) and $_GET['a']=='newpost'){
-      newpage($_POST['user_title'],$_POST['user_content']);
-    }        
-}
+//printMenu();
+//action post if VVV
 ?>
-<?php if(!empty($_POST['user_title']) and !empty($_POST['user_content']) and checksec($_COOKIE["uindex"],$_COOKIE["hash"])==false): ?>
-   <?php printError('You are not connected'); ?>
-<?php endif; ?>
 <h1>Welcome to <a class="nlk" href="/docs/about.html">phpBBS</a> !</h1>
 <div>
-
-<?php homepage(); ?>
+<?php //Show latest posts  ?>
 </div>
 </body>
 </html>

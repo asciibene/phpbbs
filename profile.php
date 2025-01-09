@@ -7,7 +7,7 @@ require 'funcdefs.php';
 </head>
 <body>
 <?php
-// possibly make it so when GETuindex is empty, display logged user profile.
+// make it so when GETuindex is empty, display logged user profile.
     if (isset($_GET['uindex'])){
       viewprofile($_GET['uindex']);
     }elseif(empty($_GET)){   
