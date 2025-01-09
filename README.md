@@ -1,6 +1,4 @@
-
-#PHP BBS
-
+# PHP BBS
 ## TODO 
 - [ ] finish rewrite of proc to class
 - [ ] fix DB unserialize stuff
@@ -9,7 +7,7 @@
 - [ ] Gemini protocol gateway proxy (Work has not even begun)
 
 
-##About markup format available inside posts:
+## About markup format available inside posts:
 
 You can use a form of markup to lightly style your posts.
 
