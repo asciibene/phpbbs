@@ -39,6 +39,21 @@ require_once __DIR__ . '/../src/Auth.php';
 require_once __DIR__ . '/../src/Forum.php';
 
 function render_layout($title, $body) {
+    $menu = '<div class="menu">'
+        . '<a href="/login.php">Login</a>'
+        . '<a href="/register.php">Register</a>'
+        . '<a href="/new.php">New post</a>'
+        . '<a href="/docs/help.html">Help</a>'
+        . '</div>';
+
+    $header = '<header class="site-header">'
+        . '<div>'
+        . '<h1 id="logo1">phpBBS</h1>'
+        . '<div id="logover">bulletin board</div>'
+        . '</div>'
+        . $menu
+        . '</header>';
+
     return <<<HTML
 <html>
 <head>
@@ -46,7 +61,12 @@ function render_layout($title, $body) {
     <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-    {$body}
+    <div class="container">
+        {$header}
+        <div class="card">
+            {$body}
+        </div>
+    </div>
 </body>
 </html>
 HTML;
