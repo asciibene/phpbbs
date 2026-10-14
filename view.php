@@ -28,11 +28,10 @@ if (!empty($voteError)) echo $voteError;
 if (!empty($commentError)) echo $commentError;
 
 echo '<form method="post" action="./view.php?index=' . e($_GET['index']) . '">';
-echo '<input type="hidden" name="csrf_token" value="' . e($_SESSION['csrf']) . '" />';
+echo csrf_field();
 echo '<h3>Add a comment</h3>';
 echo '<input type="text" name="user_comment" placeholder="add a comment" />';
-echo '<br>';
-echo '<button type="submit">Submit</button>';
+echo '<br><button type="submit">Submit</button>';
 echo '</form>';
 
 $body = ob_get_clean();

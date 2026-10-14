@@ -88,10 +88,6 @@ function create_post($title, $content, $author) {
     return Forum::createPost($title, $content, $author);
 }
 
-function post_for_id($id) {
-    return Forum::findPostById($id);
-}
-
 function addvote($id, $value) {
     return Forum::addVote($id, (int) $value);
 }
@@ -119,9 +115,7 @@ function viewpage($id, $showVotes = true) {
 
     if ($showVotes) {
         echo '<div class="vote">Votes: ' . (int) ($post['votes'] ?? 0) . '</div>';
-        echo '<form method="post">';
-        echo csrf_field();
-        echo '<button name="voted" value="1">Upvote</button></form>';
+        echo '<form method="post">' . csrf_field() . '<button name="voted" value="1">Upvote</button></form>';
     }
 
     if (!empty($post['comments'])) {
@@ -144,12 +138,10 @@ function showedits($id) {
         echo printError('Page not found');
         return;
     }
-
     if (empty($post['edits'])) {
         echo '<div>No edits</div>';
         return;
     }
-
     foreach ($post['edits'] as $edit) {
         echo '<div class="com">';
         echo '<b>' . e($edit['editor']) . '</b>';
@@ -175,7 +167,6 @@ function viewprofile($lookup) {
         echo printError('User not found');
         return false;
     }
-
     echo '<h2>' . e($user['username']) . '</h2>';
     echo '<div>Joined: ' . date('Y-m-d', (int) $user['created_at']) . '</div>';
     return true;
@@ -185,7 +176,6 @@ function verifylogin() {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         return false;
     }
-
     $username = $_POST['login_name'] ?? '';
     $password = $_POST['login_password'] ?? '';
     return Auth::login($username, $password);
@@ -193,10 +183,6 @@ function verifylogin() {
 
 function checksec($uindex = null, $hash = null) {
     return Auth::isLoggedIn();
-}
-
-function url_for($path) {
-    return $path;
 }
 
 ?>

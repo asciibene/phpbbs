@@ -15,15 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['user_title'])) {
     exit;
 }
 
-$body = <<<HTML
-<h3>New post</h3>
-<form method="post" action="./new.php">
-    <input type="hidden" name="csrf_token" value="{$_SESSION['csrf']}" />
-    <input type="text" name="user_title" placeholder="Title" />
-    <br>
-    <textarea id="cnt" name="user_content">default text</textarea><br>
-    <button type="submit">Send</button>
-</form>
-HTML;
+$body = '<h3>New post</h3>'
+    . '<form method="post" action="./new.php">'
+    . csrf_field()
+    . '<input type="text" name="user_title" placeholder="Title" /><br>'
+    . '<textarea id="cnt" name="user_content">default text</textarea><br>'
+    . '<button type="submit">Send</button>'
+    . '</form>';
 
 echo render_layout('phpwiki - new post', $body);
