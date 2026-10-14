@@ -1,18 +1,4 @@
 <?php
-require 'funcdefs.php';
+require __DIR__ . '/src/legacy_pages.php';
 
-?><html>
-<head>
-	<title>phpbbs - admin</title>
-	<link rel="stylesheet" type="text/css" href="style.css" />  
-</head>
-<body>
-<h1>Admin</h1>
-<div> 
-<?php if(checksec()){
-
-;
-
-</div>
-</body>
-</html>
+echo admin_page();
