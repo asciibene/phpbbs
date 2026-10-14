@@ -7,6 +7,7 @@ if (!is_logged_in()) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['user_title'])) {
+    require_csrf();
     $title = trim((string) $_POST['user_title']);
     $content = trim((string) ($_POST['user_content'] ?? ''));
     $id = create_post($title, $content, current_user()['username']);
@@ -17,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['user_title'])) {
 $body = <<<HTML
 <h3>New post</h3>
 <form method="post" action="./new.php">
+    <input type="hidden" name="csrf_token" value="{$_SESSION['csrf']}" />
     <input type="text" name="user_title" placeholder="Title" />
     <br>
     <textarea id="cnt" name="user_content">default text</textarea><br>

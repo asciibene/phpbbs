@@ -1,6 +1,39 @@
 <?php
 session_start();
 
+if (empty($_SESSION['csrf'])) {
+    $_SESSION['csrf'] = bin2hex(random_bytes(32));
+}
+
+function csrf_token() {
+    return $_SESSION['csrf'] ?? '';
+}
+
+function csrf_field() {
+    return '<input type="hidden" name="csrf_token" value="' . htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') . '" />';
+}
+
+function require_csrf() {
+    $token = $_POST['csrf_token'] ?? '';
+    if (!hash_equals($_SESSION['csrf'] ?? '', $token)) {
+        http_response_code(403);
+        die('CSRF validation failed.');
+    }
+}
+
+function session_security() {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    ini_set('session.cookie_httponly', '1');
+    ini_set('session.use_only_cookies', '1');
+    if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
+        ini_set('session.cookie_secure', '1');
+    }
+}
+
+session_security();
+
 require_once __DIR__ . '/../src/Storage.php';
 require_once __DIR__ . '/../src/Auth.php';
 require_once __DIR__ . '/../src/Forum.php';
@@ -86,7 +119,9 @@ function viewpage($id, $showVotes = true) {
 
     if ($showVotes) {
         echo '<div class="vote">Votes: ' . (int) ($post['votes'] ?? 0) . '</div>';
-        echo '<form method="post"><button name="voted" value="1">Upvote</button></form>';
+        echo '<form method="post">';
+        echo csrf_field();
+        echo '<button name="voted" value="1">Upvote</button></form>';
     }
 
     if (!empty($post['comments'])) {

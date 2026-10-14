@@ -2,6 +2,8 @@
 require __DIR__ . '/scripts/funcdefs.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_csrf();
+
     if (isset($_POST['voted']) && isset($_GET['index']) && is_logged_in()) {
         addvote((string) $_GET['index'], $_POST['voted']);
     } elseif (isset($_POST['voted']) && !is_logged_in()) {
@@ -26,6 +28,7 @@ if (!empty($voteError)) echo $voteError;
 if (!empty($commentError)) echo $commentError;
 
 echo '<form method="post" action="./view.php?index=' . e($_GET['index']) . '">';
+echo '<input type="hidden" name="csrf_token" value="' . e($_SESSION['csrf']) . '" />';
 echo '<h3>Add a comment</h3>';
 echo '<input type="text" name="user_comment" placeholder="add a comment" />';
 echo '<br>';

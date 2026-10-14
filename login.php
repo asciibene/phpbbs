@@ -2,7 +2,9 @@
 require __DIR__ . '/scripts/funcdefs.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'login') {
+    require_csrf();
     if (login_user($_POST['login_name'] ?? '', $_POST['login_password'] ?? '')) {
+        $_SESSION['user']['last_login'] = time();
         $body = notify('now logged in');
     } else {
         $body = printError('Invalid username or password.');
@@ -11,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'login
     $body = <<<HTML
 <h3>Login</h3>
 <form method="post" action="./login.php">
+    <input type="hidden" name="csrf_token" value="{$_SESSION['csrf']}" />
     <input type="text" name="login_name" placeholder="username" />
     <br />
     <input type="password" name="login_password" placeholder="password" />

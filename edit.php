@@ -3,11 +3,16 @@ require __DIR__ . '/scripts/funcdefs.php';
 
 ob_start();
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_csrf();
+}
+
 if (!is_logged_in()) {
     echo printError('you are not logged in.');
 } elseif (isset($_GET['index']) && empty($_POST) && ($_GET['a'] ?? '') === 'editpage') {
     echo '<h3>Editing page: <u>' . e(gettitlefromindex((string) $_GET['index'])) . '</u></h3>';
     echo '<form method="post" action="./edit.php?a=wr&index=' . e($_GET['index']) . '">';
+    echo '<input type="hidden" name="csrf_token" value="' . e($_SESSION['csrf']) . '" />';
     echo '<textarea name="edit_content">' . e(getcontent_nl2br((string) $_GET['index'])) . '</textarea><br>';
     echo '<button type="submit">Send</button>';
     echo '</form>';
