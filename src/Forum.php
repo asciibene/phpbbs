@@ -24,7 +24,7 @@ class Forum {
         $content = trim((string) $content);
         $author = trim((string) $author);
 
-        if ($title === '' || $content === '') {
+        if ($title === '' || $content === '' || mb_strlen($title) > 120 || mb_strlen($content) > 4000) {
             return false;
         }
 
@@ -68,7 +68,7 @@ class Forum {
 
     public static function addComment($id, $comment, $author) {
         $comment = trim((string) $comment);
-        if ($comment === '') {
+        if ($comment === '' || mb_strlen($comment) > 1000) {
             return false;
         }
 
@@ -89,7 +89,7 @@ class Forum {
 
     public static function editPost($id, $content, $editor) {
         $content = trim((string) $content);
-        if ($content === '') {
+        if ($content === '' || mb_strlen($content) > 4000) {
             return false;
         }
 

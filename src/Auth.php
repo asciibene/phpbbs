@@ -30,7 +30,7 @@ class Auth {
         $username = trim((string) $username);
         $password = (string) $password;
 
-        if ($username === '' || $password === '') {
+        if (!username_is_valid($username) || !password_is_valid($password)) {
             return false;
         }
 
@@ -56,13 +56,14 @@ class Auth {
         $username = trim((string) $username);
         $password = (string) $password;
 
-        if ($username === '' || $password === '') {
+        if (!username_is_valid($username) || !password_is_valid($password)) {
             return false;
         }
 
         $users = Storage::read('users');
         foreach ($users as $index => $user) {
             if (strcasecmp((string) $user['username'], $username) === 0 && password_verify($password, (string) $user['password'])) {
+                session_regenerate_id(true);
                 $_SESSION['user'] = [
                     'id' => (int) $user['id'],
                     'username' => $user['username'],

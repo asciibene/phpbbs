@@ -32,6 +32,33 @@ function session_security() {
     }
 }
 
+function username_is_valid($username) {
+    $username = trim((string) $username);
+    return preg_match('/^[a-zA-Z0-9_]{3,24}$/', $username) === 1;
+}
+
+function password_is_valid($password) {
+    return strlen((string) $password) >= 6;
+}
+
+function logout_user() {
+    $_SESSION = [];
+    if (ini_get('session.use_cookies')) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+    }
+    session_destroy();
+    header('Location: /index.php');
+    exit;
+}
+
+function require_login($redirect = '/login.php') {
+    if (!Auth::isLoggedIn()) {
+        header('Location: ' . $redirect);
+        exit;
+    }
+}
+
 session_security();
 
 require_once __DIR__ . '/../src/Storage.php';
@@ -39,13 +66,16 @@ require_once __DIR__ . '/../src/Auth.php';
 require_once __DIR__ . '/../src/Forum.php';
 
 function render_layout($title, $body) {
-    $menu = '<div class="menu">'
-        . '<a href="/login.php">Login</a>'
+    $menuLinks = '<a href="/login.php">Login</a>'
         . '<a href="/register.php">Register</a>'
         . '<a href="/new.php">New post</a>'
-        . '<a href="/docs/help.html">Help</a>'
-        . '</div>';
+        . '<a href="/docs/help.html">Help</a>';
 
+    if (Auth::isLoggedIn()) {
+        $menuLinks .= '<a href="/logout.php">Logout</a>';
+    }
+
+    $menu = '<div class="menu">' . $menuLinks . '</div>';
     $header = '<header class="site-header">'
         . '<div>'
         . '<h1 id="logo1">phpBBS</h1>'
