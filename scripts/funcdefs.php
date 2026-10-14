@@ -66,16 +66,25 @@ require_once __DIR__ . '/../src/Auth.php';
 require_once __DIR__ . '/../src/Forum.php';
 
 function render_layout($title, $body) {
-    $menuLinks = '<a href="/login.php">Login</a>'
-        . '<a href="/register.php">Register</a>'
-        . '<a href="/new.php">New post</a>'
-        . '<a href="/docs/help.html">Help</a>';
+    $menuParts = [];
+
+    // Always-visible links
+    $menuParts[] = '<a href="/new.php">New post</a>';
+    $menuParts[] = '<a href="/docs/help.html">Help</a>';
 
     if (Auth::isLoggedIn()) {
-        $menuLinks .= '<a href="/logout.php">Logout</a>';
+        $user = Auth::currentUser();
+        $username = htmlspecialchars($user['username'] ?? '');
+        // show a simple "Signed in as X" and a logout link
+        $menuParts[] = '<span style="color:var(--muted);font-weight:600;margin-left:8px">Signed in as ' . $username . '</span>';
+        $menuParts[] = '<a href="/logout.php">Logout</a>';
+    } else {
+        // show login / register when not authenticated
+        $menuParts[] = '<a href="/login.php">Login</a>';
+        $menuParts[] = '<a href="/register.php">Register</a>';
     }
 
-    $menu = '<div class="menu">' . $menuLinks . '</div>';
+    $menu = '<div class="menu">' . implode('', $menuParts) . '</div>';
     $header = '<header class="site-header">'
         . '<div>'
         . '<h1 id="logo1">phpBBS</h1>'
