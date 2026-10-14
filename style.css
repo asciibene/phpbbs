@@ -7,13 +7,13 @@
    - Focus on legibility and modern minimalist UI
 */
 :root{
-  --bg: #000000; /* pure black */
-  --panel: #071014; /* deep navy panel for subtle separation */
+  --bg: #000000;
+  --panel: #071014;
   --muted: #9aa6b2;
-  --text: #E6EEF6; /* soft white */
-  --accent: #ff2d95; /* vibrant magenta */
-  --accent-2: #00e6ff; /* cyan */
-  --accent-3: #a6ff4d; /* lime */
+  --text: #E6EEF6;
+  --accent: #ff2d95;
+  --accent-2: #00e6ff;
+  --accent-3: #a6ff4d;
   --card-radius: 8px;
   --gap: 16px;
   --max-width: 980px;
@@ -27,27 +27,36 @@ a:hover{text-decoration:underline}
 
 .container{max-width:var(--max-width);margin:32px auto;padding:20px}
 
-/* Header */
 .site-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
 #logo1{font-weight:700;color:var(--accent);font-size:22px;margin:0}
 #logo2{font-size:13px;color:var(--accent-2);margin:0}
 #logover{font-size:12px;color:var(--muted)}
 
-.menu{display:flex;gap:10px;align-items:center}
+.menu{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .menu > a{padding:8px 10px;border-radius:6px;color:var(--text);background:transparent;border:1px solid transparent;font-weight:600}
 .menu > a:hover{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-color:rgba(255,255,255,0.03)}
 
-/* Card wrapper */
+/* dropdown user menu */
+.user-menu{position:relative;display:inline-block}
+.user-menu summary{
+  list-style:none;cursor:pointer;padding:8px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.01);color:var(--text);font-weight:600
+}
+.user-menu summary::-webkit-details-marker{display:none}
+.user-menu[open] summary{border-bottom-left-radius:0;border-bottom-right-radius:0}
+.user-menu-content{
+  position:absolute;right:0;top:calc(100% + 6px);background:#05060a;border:1px solid rgba(255,255,255,0.04);border-radius:8px;min-width:170px;padding:8px;display:flex;flex-direction:column;z-index:10;box-shadow:0 12px 28px rgba(0,0,0,0.4)
+}
+.user-menu-content a{padding:8px 10px;border-radius:6px;color:var(--text);display:block}
+.user-menu-content a:hover{background:rgba(255,255,255,0.02);text-decoration:none}
+
 .card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.008));border-radius:var(--card-radius);padding:20px;border:1px solid rgba(255,255,255,0.03)}
 
-/* Post list */
 .post-list{list-style:none;padding:0;margin:0;display:block}
 .post-list li{display:flex;flex-direction:column;padding:14px;border-bottom:1px solid rgba(255,255,255,0.02)}
 .post-list li:last-child{border-bottom:none}
 .link{color:var(--accent-2);font-weight:700;font-size:1.05rem}
 .post-meta{color:var(--muted);font-size:0.9rem;margin-top:6px}
 
-/* Post view */
 .view_title{font-size:1.6rem;color:var(--accent);margin-bottom:6px;font-weight:800}
 .view_time{color:var(--muted);font-size:0.9rem;margin-bottom:8px}
 .view_view{color:var(--text);background:transparent;padding:14px;border-radius:6px;font-size:1rem}
@@ -55,30 +64,24 @@ a:hover{text-decoration:underline}
 .vote{margin-top:10px}
 #voteform{display:inline-block}
 
-/* Comments */
 .com{border-left:3px solid rgba(255,255,255,0.03);padding:12px;margin:10px 0;background:transparent;border-radius:6px}
 .com_auth{font-weight:700;color:var(--accent-3);display:inline-block;margin-right:8px}
 .com_tstamp{font-size:0.85rem;color:var(--muted);margin-left:6px}
 
-/* Forms */
 form{margin-top:12px}
 input[type=text],input[type=password],textarea{width:100%;padding:10px 12px;background:#05060a;border:1px solid rgba(255,255,255,0.03);color:var(--text);border-radius:8px}
 textarea{min-height:110px}
 
-/* Buttons */
 button{padding:10px 14px;border-radius:8px;border:none;background:var(--accent);color:#fff;font-weight:700;cursor:pointer}
 button.secondary{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)}
 
-/* Notification/Error */
 .notify{color:var(--accent-3);font-weight:700;margin:8px 0}
 small.error{color:var(--accent);font-weight:800;display:block;margin:6px 0}
 small.error::before{content:"Error: ";}
 
-/* Misc */
 .view_title + .view_time{margin-bottom:12px}
 .menu a:visited{color:var(--text)}
 
-/* Responsive */
 @media (max-width:720px){
   .container{padding:12px;margin:18px auto}
   #logo1{font-size:18px}

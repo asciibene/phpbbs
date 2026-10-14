@@ -68,18 +68,22 @@ require_once __DIR__ . '/../src/Forum.php';
 function render_layout($title, $body) {
     $menuParts = [];
 
-    // Always-visible links
     $menuParts[] = '<a href="/new.php">New post</a>';
     $menuParts[] = '<a href="/docs/help.html">Help</a>';
 
     if (Auth::isLoggedIn()) {
         $user = Auth::currentUser();
-        $username = htmlspecialchars($user['username'] ?? '');
-        // show a simple "Signed in as X" and a logout link
-        $menuParts[] = '<span style="color:var(--muted);font-weight:600;margin-left:8px">Signed in as ' . $username . '</span>';
-        $menuParts[] = '<a href="/logout.php">Logout</a>';
+        $username = htmlspecialchars($user['username'] ?? '', ENT_QUOTES, 'UTF-8');
+        $profileLink = '/profile.php?uindex=' . rawurlencode((string) ($user['username'] ?? ''));
+
+        $menuParts[] = '<details class="user-menu">'
+            . '<summary>Signed in as ' . $username . '</summary>'
+            . '<div class="user-menu-content">'
+            . '<a href="' . $profileLink . '">Profile</a>'
+            . '<a href="/logout.php">Logout</a>'
+            . '</div>'
+            . '</details>';
     } else {
-        // show login / register when not authenticated
         $menuParts[] = '<a href="/login.php">Login</a>';
         $menuParts[] = '<a href="/register.php">Register</a>';
     }
