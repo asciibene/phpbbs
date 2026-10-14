@@ -1,130 +1,125 @@
+/* Modernized stylesheet for phpBBS
+   - Cleaner layout and spacing
+   - Improved typography with system font stack
+   - Consistent color scheme and better contrast
+   - Responsive container and readable forms/buttons
+   - Preserves existing class names so HTML changes are not required
+*/
 
-	 body {
-	   background-color: black;
-	   color: white;
-	 }
-	 body::after {
-    }
-   
-	 
-		* {
-			font-family: Courrier, monospace;
-		}
-		code { 
-			font-family: monospace;
-		}
-		#logo1 {
-			font-size: 42px;
-			 background-color: #1D00FF;
-			 color:black;
-			 padding: 0px;
-    }
-   #logo2{
-     font-size: 36px;
-			 color: #2C17FF;
-			 text-decoration: underline;
+:root{
+  --bg: #0f1720; /* deep navy */
+  --panel: #0b1220;
+  --muted: #9aa6b2;
+  --text: #e6eef6;
+  --accent: #4f46e5; /* indigo */
+  --accent-2: #06b6d4; /* teal */
+  --success: #16a34a;
+  --danger: #ef4444;
+  --card-radius: 10px;
+}
 
-   }
-   #logover{
-     font-size: 35%;
-     text-decoration: underline;
-     margin-top: 0px;
-     padding-top: 0px;
-     color: #31FF6C;
+*{box-sizing:border-box}
+html,body{
+  height:100%;
+  margin:0;
+  background:linear-gradient(180deg,var(--bg),#07101a 60%);
+  color:var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.5;
+}
 
-  }
+a{ color:var(--accent-2); text-decoration:none; }
+a:hover{ text-decoration:underline; }
+a.nlk{ color:var(--accent); text-decoration:none; }
 
-    div p {
-    margin-left: 8px;
-    margin-top: 2px;
-    }
-    div.comments_box, div.comment{
-      border: inset 2px #2E0EEC;
-      padding: 4px 2px;
-      margin: 8px 0px;
-    }
-    a.link, a.link:visited{
-      color: cyan;
-      border: none;
-			 font-weight: bold;
-    }
-    div a{
-      margin-right: 12px;
-    
-    }
-    div b{
-      color: darkgrey;    
-      font-size: 60%;
-    }
+/* Container */
+.container{
+  max-width:900px;
+  margin:28px auto;
+  padding:20px;
+}
 
-		small.error {
-			color: red;
-			font-weight: bold;
-		}
-		small.error::before {
-			content: "Error! ";
-    }
-    a{
-      color: aqua;
-      border-left: solid 4px blue;
-      padding-left: 4px;
-      
-    }
-    a:visited{
-     border-left: solid 4px #777;
-     color: grey;
-    }
-    a.nlk{
-      border: none;
-      
-    }
-    .notify{
-      font-size: 75%;
-      color: lime;
-    }
-    .vote{
-    margin: 4px;
-    
-    }
-    .view_title{
-      text-decoration: underline;
-      color: #3D70FF;
-    }
-    .view_time{ 
-    margin-left: 4px;
-    }
-    .view_view{
-      color: darkgrey;
-    }
-    .com{
-      border-left: solid 3px white;
-      padding-left: 5px;
-    }
-    .com_auth{
-      font-size: 100%;
-      margin-left: 4px;
-      margin-right: 4px;
-    }
-    .com_tstamp{
-      font-size: 50%;
-      color: darkgrey;
-      margin-left: 12px;
-    }
+header.site-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:18px;
+}
 
-    form {
-      border: 2px solid white;
-      padding: 2px;
-    }
-    .tsdiff{
-      color: darkgrey;
-      margin-left: 10px;
-    }
-    .menu > a, .menu > a:visited{
-      color:white;
-      border: none;
-      margin: 0px 8px;
-    }
-    #voteform{
-      visibility: hidden;
-    
-    }
+#logo1{ font-size:28px; color:var(--accent); margin:0; }
+#logo2{ font-size:16px; color:var(--accent-2); margin:0; }
+#logover{ font-size:12px; color:var(--muted); }
+
+.menu{
+  display:flex; gap:12px; align-items:center;
+}
+.menu > a, .menu > a:visited{
+  color:var(--text);
+  background:transparent;
+  padding:8px 12px;
+  border-radius:8px;
+  border:1px solid transparent;
+}
+.menu > a:hover{ background:rgba(255,255,255,0.02); border-color:rgba(255,255,255,0.04); }
+
+/* Main card */
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.03);
+  border-radius:var(--card-radius);
+  padding:16px;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.6);
+}
+
+h1,h2,h3,h4{ margin:8px 0; }
+
+/* Post list */
+ul.post-list{ list-style:none; padding:0; margin:0; }
+ul.post-list li{ padding:12px; border-bottom:1px dashed rgba(255,255,255,0.03); display:flex; flex-direction:column; }
+ul.post-list li:last-child{ border-bottom:none; }
+.post-meta{ color:var(--muted); font-size:0.9rem; margin-top:6px; }
+.link{ color:var(--accent-2); font-weight:600; }
+
+/* Post view */
+.view_title{ font-size:1.45rem; color:var(--accent); margin-bottom:6px; }
+.view_time{ color:var(--muted); font-size:0.95rem; margin-bottom:8px; }
+.view_view{ background:transparent; padding:12px; border-radius:8px; color:var(--text); }
+
+.vote{ margin-top:10px; }
+#voteform{ display:inline-block; }
+
+/* Comments */
+.com{ border-left:4px solid rgba(255,255,255,0.03); padding:10px 12px; margin:10px 0; background:rgba(255,255,255,0.01); border-radius:8px; }
+.com_auth{ font-weight:700; margin-right:8px; color:var(--text); }
+.com_tstamp{ font-size:0.85rem; color:var(--muted); margin-left:6px; }
+
+/* Forms */
+form{ margin-top:12px; }
+input[type=text], input[type=password], textarea{
+  width:100%;
+  padding:10px 12px;
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.06);
+  color:var(--text);
+  border-radius:8px;
+  resize:vertical;
+}
+textarea{ min-height:120px; }
+button{ cursor:pointer; padding:8px 14px; border-radius:8px; border:none; background:var(--accent); color:white; font-weight:600; }
+button.secondary{ background:transparent; border:1px solid rgba(255,255,255,0.04); color:var(--text); }
+
+/* Notifications and errors */
+.notify{ color:var(--success); margin:8px 0; font-weight:700; }
+small.error{ color:var(--danger); font-weight:700; display:block; margin:6px 0; }
+small.error::before{ content: "Error: "; font-weight:800; }
+
+.tsdiff{ color:var(--muted); font-size:0.9rem; margin-left:8px; }
+
+/* Responsive */
+@media (max-width:700px){
+  .container{ padding:12px; margin:12px; }
+  #logo1{ font-size:22px; }
+}
