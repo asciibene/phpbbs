@@ -1,0 +1,9 @@
+{
+  "users": [
+    {
+      "name": "admin",
+      "password": "REPLACE_ME",
+      "created_at": 0
+    }
+  ]
+}
